@@ -115,7 +115,7 @@ budgetGenres = budgetGenres.reset_index()
 #Mapping the titles of movies to their corresponding index values in the budgetGenres dataframe. Drop_duplicates ensures that the movie title has a unique index value.
 indices = pd.Series(budgetGenres.index, index=budgetGenres['title_x']).drop_duplicates()
 
-print(indices.head())
+#print(indices.head())
 
 def getRecommendations(title, cosineSimilarity):
     idx = indices[title]
@@ -131,3 +131,6 @@ def getRecommendations(title, cosineSimilarity):
 print('########### Content Based Systems ####################')
 print("Recomendations for the Dark Knight Rises")
 print(getRecommendations("The Dark Knight Rises", cosineSimilarity))
+print()
+print('Recommendations for the Avengers')
+print(getRecommendations("The Avengers", cosineSimilarity))
