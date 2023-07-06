@@ -121,5 +121,13 @@ def getRecommendations(title, cosineSimilarity):
     idx = indices[title]
     similarScores = list(enumerate(cosineSimilarity[idx]))
     similarScores = sorted(similarScores, key=lambda x: x[1], reverse=True)
-    similarScores = simScores[1:11]
+    similarScores = similarScores[1:11]
     #(a,b) where a is id of movie, b is similarScore
+
+    movieIndices = [ind[0] for ind in similarScores]
+    movies = budgetGenres["title_x"].iloc[movieIndices]
+    return movies
+
+print('########### Content Based Systems ####################')
+print("Recomendations for the Dark Knight Rises")
+print(getRecommendations("The Dark Knight Rises", cosineSimilarity))
