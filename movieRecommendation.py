@@ -95,18 +95,25 @@ budgetGenres['soup'] = budgetGenres.apply(soup, axis = 1)
 
 #print(budgetGenres['soup'].head())
 
+#creates CountVectorizer class and sets the parameter to stop common English words 'the, is, etc' from being considered as features
 countVectorizerVar = CountVectorizer(stop_words="english")
 
+#the fit_transform fits the countVectorizerVar on the text data and transforms it into a matrix of token counts. 
 countMatrix = countVectorizerVar.fit_transform(budgetGenres['soup'])
 
 print(countMatrix.shape)
 
+#calculates the cosine similarity between the documents represented by the countMatrix. It takes the countMatrix as input twice since it 
+# compares each document with every other document.
 cosineSimilarity = cosine_similarity(countMatrix, countMatrix)
 
 print(cosineSimilarity.shape)
 
+#Reseting the index of budgetGenres dataframe. The current index is replaced with a default numeric index
 budgetGenres = budgetGenres.reset_index()
 
+#Mapping the titles of movies to their corresponding index values in the budgetGenres dataframe. Drop_duplicates ensures that the movie title has a unique index value.
 indices = pd.Series(budgetGenres.index, index=budgetGenres['title_x']).drop_duplicates()
 
 print(indices.head())
+
