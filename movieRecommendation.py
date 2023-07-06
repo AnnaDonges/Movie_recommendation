@@ -80,4 +80,8 @@ for feature in features:
     budgetGenres[feature] = budgetGenres[feature].apply(cleanData)
 
 def soup(features):
-    pass
+    return ' '.join(features['keywords']) + ' ' + ' '.join(features['cast']) + ' ' + features['director'] + ' ' +  ' '.join(features['genres'])
+
+budgetGenres['soup'] = budgetGenres.apply(soup, axis = 1)
+
+print(budgetGenres['soup'].head())
