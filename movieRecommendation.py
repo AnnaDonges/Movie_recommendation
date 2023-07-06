@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 from IPython.display import display
 from ast import literal_eval
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
 
 # Set the path for the output CSV file
 output_path = "C:/Users/ad29203/Desktop/GHP/Movie_recommendation/output.csv"
@@ -66,6 +69,7 @@ budgetGenres[['title_x', 'cast', 'director', 'keywords', 'genres']].head()
 
 
 def cleanData(row):
+    #get rid of spaces and capital letters in features
     if isinstance(row, list):
         return [str.lower(i.replace(" ", "")) for i in row]
     else:
@@ -74,14 +78,20 @@ def cleanData(row):
         else:
             return ""
         
-
+#features that need to be cleaned
 features = ['cast', 'keywords', 'director', 'genres']
+
+#calling the cleanData function
 for feature in features:
     budgetGenres[feature] = budgetGenres[feature].apply(cleanData)
 
+
 def soup(features):
+    #creating a soup
     return ' '.join(features['keywords']) + ' ' + ' '.join(features['cast']) + ' ' + features['director'] + ' ' +  ' '.join(features['genres'])
 
+#applying the soup function
 budgetGenres['soup'] = budgetGenres.apply(soup, axis = 1)
 
 print(budgetGenres['soup'].head())
+
