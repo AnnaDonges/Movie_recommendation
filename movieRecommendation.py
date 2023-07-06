@@ -16,7 +16,7 @@ castCreditCrew = pd.read_csv(path + "/castCrewTitle.csv")
 
 # Merge columns
 castCreditCrew.columns = ['id', 'title', 'cast', 'crew']
-budgetGenres = budgetGenres.merge(castCreditCrew, on='id')
+budgetGenres = budgetGenres.merge(castCreditCrew, on ='id')
 
 # Display the merged dataframe as a table
 #budgetGenres.head()
@@ -30,7 +30,7 @@ features = ['cast', 'crew', 'keywords', 'genres']
 for feature in features:
     budgetGenres[feature] = budgetGenres[feature].apply(literal_eval)
 
-display(budgetGenres[features].head(10)) 
+#display(budgetGenres[features].head(10)) 
 
 def getDirector(x):
     for i in x:
@@ -56,4 +56,4 @@ features = ["cast", "keywords", "genres"]
 for feature in features:
     budgetGenres[feature] = budgetGenres[feature].apply(getList)
 
-print(budgetGenres[['title', 'cast', 'director', 'keywords', 'genres']].head())
+print(budgetGenres[['title_x', 'cast', 'director', 'keywords', 'genres']].head())
