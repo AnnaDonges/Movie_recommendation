@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from IPython.display import display
 from ast import literal_eval
 
@@ -30,3 +31,29 @@ for feature in features:
     budgetGenres[feature] = budgetGenres[feature].apply(literal_eval)
 
 display(budgetGenres[features].head(10)) 
+
+def getDirector(x):
+    for i in x:
+        if i["job"] == "Director":
+            return i["name"]
+    return np.nan
+
+
+
+def getList(x):
+    if isinstance(x, list):
+        names = [i["name"] for i in x]
+        if len(names) > 3:
+            names = names[:3]
+        return names
+    
+    return []
+
+budgetGenres["director"] = budgetGenres["crew"].apply(getDirector)
+
+features = ["cast", "keywords", "genres"]
+
+for feature in features:
+    budgetGenres[feature] = budgetGenres[feature].apply(getList)
+
+print(budgetGenres[['title', 'cast', 'director', 'keywords', 'genres']].head())
