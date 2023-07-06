@@ -33,6 +33,7 @@ for feature in features:
 #display(budgetGenres[features].head(10)) 
 
 def getDirector(x):
+    #extract the name of the director form the crew list
     for i in x:
         if i["job"] == "Director":
             return i["name"]
@@ -41,6 +42,8 @@ def getDirector(x):
 
 
 def getList(x):
+    #get the first 3 names/objects from list
+    #ex. first three cast members, first 3 genres, first 3 keywords
     if isinstance(x, list):
         names = [i["name"] for i in x]
         if len(names) > 3:
@@ -49,11 +52,32 @@ def getList(x):
     
     return []
 
+#apply get director to dataset
 budgetGenres["director"] = budgetGenres["crew"].apply(getDirector)
 
+#features that the get list function will apply to
 features = ["cast", "keywords", "genres"]
 
+#apply get list function
 for feature in features:
     budgetGenres[feature] = budgetGenres[feature].apply(getList)
 
 print(budgetGenres[['title_x', 'cast', 'director', 'keywords', 'genres']].head())
+
+
+def cleanData(row):
+    if isinstance(row, list):
+        return [str.lower(i.replace(" ", "")) for i in row]
+    else:
+        if isinstance(row, str):
+            return str.lower(row.replace(" ", ""))
+        else:
+            return ""
+        
+
+features = ['cast', 'keywords', 'director', 'genes']
+for feature in features:
+    budgetGenres[feature] = budgetGenres[feature].apply(cleanData)
+
+def soup(features):
+    pass
