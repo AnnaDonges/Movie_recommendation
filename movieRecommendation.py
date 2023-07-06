@@ -15,7 +15,7 @@ castCreditCrew = pd.read_csv(path + "/castCrewTitle.csv")
 #castCreditCrew.head()
 
 # Merge columns
-castCreditCrew.columns = ['id', 'cast', 'crew']
+castCreditCrew.columns = ['id', 'title', 'cast', 'crew']
 budgetGenres = budgetGenres.merge(castCreditCrew, on='id')
 
 # Display the merged dataframe as a table
