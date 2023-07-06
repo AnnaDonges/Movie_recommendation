@@ -62,7 +62,7 @@ features = ["cast", "keywords", "genres"]
 for feature in features:
     budgetGenres[feature] = budgetGenres[feature].apply(getList)
 
-print(budgetGenres[['title_x', 'cast', 'director', 'keywords', 'genres']].head())
+budgetGenres[['title_x', 'cast', 'director', 'keywords', 'genres']].head()
 
 
 def cleanData(row):
@@ -75,7 +75,7 @@ def cleanData(row):
             return ""
         
 
-features = ['cast', 'keywords', 'director', 'genes']
+features = ['cast', 'keywords', 'director']
 for feature in features:
     budgetGenres[feature] = budgetGenres[feature].apply(cleanData)
 
