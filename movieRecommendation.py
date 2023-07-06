@@ -93,5 +93,20 @@ def soup(features):
 #applying the soup function
 budgetGenres['soup'] = budgetGenres.apply(soup, axis = 1)
 
-print(budgetGenres['soup'].head())
+#print(budgetGenres['soup'].head())
 
+countVectorizerVar = CountVectorizer(stop_words="english")
+
+countMatrix = countVectorizerVar.fit_transform(budgetGenres['soup'])
+
+print(countMatrix.shape)
+
+cosineSimilarity = cosine_similarity(countMatrix, countMatrix)
+
+print(cosineSimilarity.shape)
+
+budgetGenres = budgetGenres.reset_index()
+
+indices = pd.Series(budgetGenres.index, index=budgetGenres['title_x']).drop_duplicates()
+
+print(indices.head())
