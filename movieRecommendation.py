@@ -75,7 +75,7 @@ def cleanData(row):
             return ""
         
 
-features = ['cast', 'keywords', 'director']
+features = ['cast', 'keywords', 'director', 'genres']
 for feature in features:
     budgetGenres[feature] = budgetGenres[feature].apply(cleanData)
 
