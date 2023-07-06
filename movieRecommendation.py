@@ -101,13 +101,13 @@ countVectorizerVar = CountVectorizer(stop_words="english")
 #the fit_transform fits the countVectorizerVar on the text data and transforms it into a matrix of token counts. 
 countMatrix = countVectorizerVar.fit_transform(budgetGenres['soup'])
 
-print(countMatrix.shape)
+#print(countMatrix.shape)
 
 #calculates the cosine similarity between the documents represented by the countMatrix. It takes the countMatrix as input twice since it 
 # compares each document with every other document.
 cosineSimilarity = cosine_similarity(countMatrix, countMatrix)
 
-print(cosineSimilarity.shape)
+#print(cosineSimilarity.shape)
 
 #Reseting the index of budgetGenres dataframe. The current index is replaced with a default numeric index
 budgetGenres = budgetGenres.reset_index()
@@ -118,19 +118,21 @@ indices = pd.Series(budgetGenres.index, index=budgetGenres['title_x']).drop_dupl
 #print(indices.head())
 
 def getRecommendations(title, cosineSimilarity):
+    if title not in indices:
+        return "Sorry, the movie is not in the data list."
+    
     idx = indices[title]
     similarScores = list(enumerate(cosineSimilarity[idx]))
     similarScores = sorted(similarScores, key=lambda x: x[1], reverse=True)
     similarScores = similarScores[1:11]
-    #(a,b) where a is id of movie, b is similarScore
 
     movieIndices = [ind[0] for ind in similarScores]
     movies = budgetGenres["title_x"].iloc[movieIndices]
     return movies
 
-print('########### Content Based Systems ####################')
-print("Recomendations for the Dark Knight Rises")
-print(getRecommendations("The Dark Knight Rises", cosineSimilarity))
+search_title = input("Enter a movie title: ")
 print()
-print('Recommendations for the Avengers')
-print(getRecommendations("The Avengers", cosineSimilarity))
+print('########### Content Based Systems ####################')
+recommendations = getRecommendations(search_title, cosineSimilarity)
+print(f"Recommendations for {search_title}:")
+print(recommendations)
