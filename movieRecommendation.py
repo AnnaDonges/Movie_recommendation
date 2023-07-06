@@ -117,3 +117,9 @@ indices = pd.Series(budgetGenres.index, index=budgetGenres['title_x']).drop_dupl
 
 print(indices.head())
 
+def getRecommendations(title, cosineSimilarity):
+    idx = indices[title]
+    similarScores = list(enumerate(cosineSimilarity[idx]))
+    similarScores = sorted(similarScores, key=lambda x: x[1], reverse=True)
+    similarScores = simScores[1:11]
+    #(a,b) where a is id of movie, b is similarScore
