@@ -118,16 +118,29 @@ while True:
     #print(indices.head())
 
     def getRecommendations(title, cosineSimilarity):
+        # Check if the given movie title is in the indices dictionary
         if title not in indices:
             return "Sorry, the movie is not in the data list."
-        
+
+        # Get the index of the movie title from the indices dictionary
         idx = indices[title]
+        
+        # Create a list of tuples with movie indices and their corresponding cosine similarity scores
         similarScores = list(enumerate(cosineSimilarity[idx]))
+        
+        # Sort the similarScores list based on the cosine similarity scores in descending order
         similarScores = sorted(similarScores, key=lambda x: x[1], reverse=True)
+        
+        # Get the top 10 similar movie scores (excluding the original movie itself)
         similarScores = similarScores[1:11]
 
+        # Extract the movie indices from the similarScores list
         movieIndices = [ind[0] for ind in similarScores]
+        
+        # Get the movie titles from the budgetGenres dataframe using the movie indices
         movies = budgetGenres["title_x"].iloc[movieIndices]
+        
+        # Return the list of recommended movies
         return movies
 
     search_title = input("Enter a movie title: ")
@@ -148,3 +161,5 @@ while True:
         print("Goodbye")
         break
     
+
+    #whether a recommendation causes someone else will watch the movie
